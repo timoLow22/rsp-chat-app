@@ -1,0 +1,26 @@
+node_modules
+
+# Android files
+build/
+.idea
+.gradle
+local.properties
+*.iml
+*.hprof
+.cxx/
+*.keystore
+!debug.keystore
+.kotlin/
+
+# iOS files
+.DS_Store
+**/Pods/
+/vendor/bundle/
+**/.xcode.env.local
+xcuserdata
+*.xcuserstate
+DerivedData
+*.ipa
+*.hmap
+*.pbxuser
+!default.pbxuser
