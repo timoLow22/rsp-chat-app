@@ -3,7 +3,7 @@ import {
   SafeAreaProvider,
   SafeAreaView,
 } from 'react-native-safe-area-context';
-import { store } from './modules/main/store';
+import { globalStore } from './modules/main/globalStore';
 import { Provider } from 'react-redux';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
@@ -13,7 +13,7 @@ function App() {
   const isDarkMode = useColorScheme() === 'dark';
 
   return (
-    <Provider store={store}>
+    <Provider store={globalStore}>
       <QueryClientProvider client={queryClient}>
         <SafeAreaProvider>
           <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
