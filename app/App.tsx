@@ -6,6 +6,8 @@ import {
 import { globalStore } from './modules/main/globalStore';
 import { Provider } from 'react-redux';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import AppBottomTabNavigator from './modules/navigation/appBottomTabNavigator';
+import { NavigationContainer } from '@react-navigation/native';
 
 const queryClient = new QueryClient();
 
@@ -17,9 +19,9 @@ function App() {
       <QueryClientProvider client={queryClient}>
         <SafeAreaProvider>
           <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
-          <SafeAreaView style={styles.container}>
-            <Text>This is the start of the RspChat app for Respond's mobile assessment</Text>
-          </SafeAreaView> 
+          <NavigationContainer>
+            <AppBottomTabNavigator />
+          </NavigationContainer>
         </SafeAreaProvider>
       </QueryClientProvider>
     </Provider>
