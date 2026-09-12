@@ -6,8 +6,7 @@ import Body from "./typography/Body";
 interface ListItemProps {
     imgSrc?: ImageSourcePropType;
     leadingElement?: React.ReactNode;
-    title: string | React.ReactNode;
-    subtitle: string | React.ReactNode;
+    contentElement: React.ReactNode;
     trailingElement: string | React.ReactNode;
     enabled?: boolean;
     onPress?: () => void;
@@ -17,8 +16,7 @@ const ListItem = (props: ListItemProps) => {
     const {
         imgSrc,
         leadingElement,
-        title,
-        subtitle,
+        contentElement,
         trailingElement,
         enabled = true,
         onPress
@@ -34,18 +32,6 @@ const ListItem = (props: ListItemProps) => {
         }
 
         return leadingElement;
-    };
-
-    const renderContent = () => {
-        // TODO: tidy up the handling of this
-        if (typeof title === 'string') {
-            return (
-                <View style={{flex: 1, flexDirection: 'column'}}>
-                    <Heading size='medium'>{title}</Heading>
-                    <Body size="small">{subtitle}</Body>
-                </View>
-            );
-        }
     };
 
     const renderTrailingElement = () => {
@@ -70,7 +56,7 @@ const ListItem = (props: ListItemProps) => {
             <View style={styles.leadingElementContainer}>
                 {renderLeadingElement()}
             </View>
-            {renderContent()}
+            {contentElement}
             <View style={styles.trailingElementContainer}>
                 {renderTrailingElement()}
             </View>
