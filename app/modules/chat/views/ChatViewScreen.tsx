@@ -7,10 +7,10 @@ import HeaderIcon from "../../../components/HeaderIcon";
 import { ChatNavigationRoutes } from "../navigation/chatNavigationRoutes";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-type ChatScreenRouteProp = RouteProp<ChatStackParamList, 'chat'>;
+type ChatViewScreenRouteProp = RouteProp<ChatStackParamList, 'chat/view'>;
 
-const ChatScreen = () => {
-    const { params } = useRoute<ChatScreenRouteProp>();
+const ChatViewScreen = () => {
+    const { params } = useRoute<ChatViewScreenRouteProp>();
 
     return (
         <View style={styles.container}>
@@ -19,8 +19,8 @@ const ChatScreen = () => {
     )
 }
 
-export const buildChatScreenOptions = (
-    route: RouteProp<ChatStackParamList, 'chat'>,
+export const buildChatViewScreenOptions = (
+    route: RouteProp<ChatStackParamList, 'chat/view'>,
     navigation: StackNavigationProp<ChatStackParamList>,
 ): StackNavigationOptions => {
     const { avatar, username } = route.params;
@@ -84,4 +84,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default ChatScreen;
+export default ChatViewScreen;

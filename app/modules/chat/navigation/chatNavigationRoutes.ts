@@ -1,6 +1,6 @@
 export const ChatNavigationRoutes = Object.freeze({
     ChatStack: 'chat-stack',
     ChatHistoryScreen: 'chat/history',
-    ChatScreen: 'chat',
+    ChatViewScreen: 'chat/view',
     ChatProfile: 'chat/profile'
 });

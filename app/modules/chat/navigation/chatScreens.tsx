@@ -2,12 +2,12 @@ import { createStackNavigator } from "@react-navigation/stack";
 
 import { ChatNavigationRoutes } from "./chatNavigationRoutes";
 import ChatHistoryScreen, { buildChatHistoryScreenOptions } from "../views/ChatHistoryScreen";
-import ChatScreen, { buildChatScreenOptions } from "../views/ChatScreen";
+import ChatViewScreen, { buildChatViewScreenOptions } from "../views/ChatViewScreen";
 import ChatProfileScreen from "../views/ChatProfileScreen";
 
 export type ChatStackParamList = {
     [ChatNavigationRoutes.ChatHistoryScreen]: undefined;
-    [ChatNavigationRoutes.ChatScreen]: chat.ChatRouteParams;
+    [ChatNavigationRoutes.ChatViewScreen]: chat.ChatViewRouteParams;
     [ChatNavigationRoutes.ChatProfile]: undefined;
 }
 
@@ -22,9 +22,9 @@ const ChatScreens = () => {
                 options={buildChatHistoryScreenOptions()}
             />
             <ChatStack.Screen
-                name={ChatNavigationRoutes.ChatScreen}
-                options={({ route, navigation }) => buildChatScreenOptions(route, navigation)}
-                component={ChatScreen}
+                name={ChatNavigationRoutes.ChatViewScreen}
+                options={({ route, navigation }) => buildChatViewScreenOptions(route, navigation)}
+                component={ChatViewScreen}
             />
             <ChatStack.Screen
                 name={ChatNavigationRoutes.ChatProfile}
