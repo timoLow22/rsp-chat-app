@@ -6,6 +6,10 @@ declare namespace chat {
         avatar: string;
     }
 
+    interface ChatProfileRouteParams {
+        userId: string;
+    }
+
     interface User {
         id: number;
         name: string;
@@ -27,6 +31,15 @@ declare namespace chat {
         title: string;
         body: string;
         createdAt: string;
+    }
+
+    interface Profile {
+        userId: string;
+        displayName: string;
+        username: string;
+        avatar: string;
+        headline: string;
+        bio: string;
     }
 
     interface Message {
@@ -52,6 +65,13 @@ declare namespace chat {
             limit: number;
             offset: number;
             results: Post[];
+        }
+
+        interface GetProfilesResponse {
+            total: number;
+            limit: number;
+            offset: number;
+            results: Profile[];
         }
     }
 }

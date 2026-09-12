@@ -1,6 +1,6 @@
 import { RouteProp, useRoute } from "@react-navigation/native";
 import { StackNavigationOptions, StackNavigationProp } from "@react-navigation/stack";
-import { Image, StyleSheet, View } from "react-native";
+import { Button, Image, KeyboardAvoidingView, StyleSheet, TextInput, View } from "react-native";
 import { ChatStackParamList } from "../navigation/chatScreens";
 import Heading from "../../../components/typography/Heading";
 import HeaderIcon from "../../../components/HeaderIcon";
@@ -17,13 +17,22 @@ const ChatViewScreen = () => {
     const { receiverMessages } = useGetReceiverMessagesQuery(params.userId);
 
     return (
-        <View style={styles.chatContainer}>
+        <KeyboardAvoidingView style={styles.chatContainer}>
             <FlatList
+                inverted={true}
                 data={receiverMessages}
                 keyExtractor={(item, index) => `${item.messageId}-${index}`}
                 renderItem={({ item }) => <Body size={'medium'}>{item.message}</Body>}
             />
-        </View>
+            <View style={styles.bottomInputContainer}>
+                <TextInput
+                    style={styles.input}
+                    placeholder='Type a message...'
+                />
+                {/* TODO: Replace with IconButton */}
+                <Button title={'Send'} />
+            </View>
+        </KeyboardAvoidingView>
     )
 }
 
@@ -31,7 +40,7 @@ export const buildChatViewScreenOptions = (
     route: RouteProp<ChatStackParamList, 'chat/view'>,
     navigation: StackNavigationProp<ChatStackParamList>,
 ): StackNavigationOptions => {
-    const { avatar, username } = route.params;
+    const { userId, avatar, username } = route.params;
     const { navigate, goBack } = navigation;
 
     return ({
@@ -56,7 +65,9 @@ export const buildChatViewScreenOptions = (
                             position={'right'}
                             size={24}
                             name={'ellipsis-v'}
-                            onPress={() => navigate(ChatNavigationRoutes.ChatProfile)}
+                            onPress={() => navigate(ChatNavigationRoutes.ChatProfile, {
+                                userId
+                            })}
                         />
                     </SafeAreaView>
                     <View style={{ height: 1, backgroundColor: '#E0E0E0'}}/>
@@ -87,6 +98,17 @@ const styles = StyleSheet.create({
     chatContainer: {
         flex: 1,
         padding: 16,
+    },
+    bottomInputContainer: {
+        flexDirection: 'row',
+        marginTop: 16,
+        height: 50,
+    },
+    input: {
+        flex: 1,
+        borderWidth: 1,
+        borderRadius: 8,
+        marginRight: 8,
     },
 });
 
