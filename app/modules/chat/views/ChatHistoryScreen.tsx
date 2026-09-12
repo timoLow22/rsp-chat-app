@@ -32,6 +32,8 @@ const ChatHistoryScreen = () => {
             // TODO: find a way to process the ID to become a string right at the query level
             userId: id.toString(),
             username,
+            avatar,
+            name,
         });
 
         const renderListContent = () => {

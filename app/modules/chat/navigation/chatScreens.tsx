@@ -23,7 +23,7 @@ const ChatScreens = () => {
             />
             <ChatStack.Screen
                 name={ChatNavigationRoutes.ChatScreen}
-                options={({ route }) => buildChatScreenOptions(route)}
+                options={({ route, navigation }) => buildChatScreenOptions(route, navigation)}
                 component={ChatScreen}
             />
             <ChatStack.Screen

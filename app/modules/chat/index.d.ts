@@ -2,6 +2,8 @@ declare namespace chat {
     interface ChatRouteParams {
         userId: string;
         username: string;
+        name: string;
+        avatar: string;
     }
 
     interface User {
