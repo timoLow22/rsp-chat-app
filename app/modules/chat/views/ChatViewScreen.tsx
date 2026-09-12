@@ -17,22 +17,24 @@ const ChatViewScreen = () => {
     const { receiverMessages } = useGetReceiverMessagesQuery(params.userId);
 
     return (
-        <KeyboardAvoidingView style={styles.chatContainer}>
-            <FlatList
-                inverted={true}
-                data={receiverMessages}
-                keyExtractor={(item, index) => `${item.messageId}-${index}`}
-                renderItem={({ item }) => <Body size={'medium'}>{item.message}</Body>}
-            />
-            <View style={styles.bottomInputContainer}>
-                <TextInput
-                    style={styles.input}
-                    placeholder='Type a message...'
+        <SafeAreaView style={styles.safeAreaContainer}>
+            <KeyboardAvoidingView style={styles.chatContainer}>
+                <FlatList
+                    inverted={true}
+                    data={receiverMessages}
+                    keyExtractor={(item, index) => `${item.messageId}-${index}`}
+                    renderItem={({ item }) => <Body size={'medium'}>{item.message}</Body>}
                 />
-                {/* TODO: Replace with IconButton */}
-                <Button title={'Send'} />
-            </View>
-        </KeyboardAvoidingView>
+                <View style={styles.bottomInputContainer}>
+                    <TextInput
+                        style={styles.input}
+                        placeholder='Type a message...'
+                    />
+                    {/* TODO: Replace with IconButton */}
+                    <Button title={'Send'} />
+                </View>
+            </KeyboardAvoidingView>
+        </SafeAreaView>
     )
 }
 
@@ -95,9 +97,12 @@ const styles = StyleSheet.create({
         width: 50,
         marginBottom: 8,
     },
-    chatContainer: {
+    safeAreaContainer: {
         flex: 1,
         padding: 16,
+    },
+    chatContainer: {
+        flex: 1,
     },
     bottomInputContainer: {
         flexDirection: 'row',
