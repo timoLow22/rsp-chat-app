@@ -1,8 +1,5 @@
-import { StatusBar, StyleSheet, Text, useColorScheme } from 'react-native';
-import {
-  SafeAreaProvider,
-  SafeAreaView,
-} from 'react-native-safe-area-context';
+import { StatusBar, StyleSheet, useColorScheme } from 'react-native';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { globalStore } from './modules/main/globalStore';
 import { Provider } from 'react-redux';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';

@@ -28,7 +28,7 @@ const ChatHistoryScreen = () => {
     const renderList: ListRenderItem<chat.User> = ({ item }) => {
         const { avatar, username, name, id } = item;
 
-        const itemOnPress = () => navigation.navigate(ChatNavigationRoutes.ChatScreen, {
+        const itemOnPress = () => navigation.navigate(ChatNavigationRoutes.ChatViewScreen, {
             // TODO: find a way to process the ID to become a string right at the query level
             userId: id.toString(),
             username,
