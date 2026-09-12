@@ -2,7 +2,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import SettingsScreen from "../settings/views/SettingsScreen";
 import { ChatNavigationRoutes } from "../chat/navigation/chatNavigationRoutes";
 import ChatScreens, { ChatStackParamList } from "../chat/navigation/chatScreens";
-import { NavigatorScreenParams } from "@react-navigation/native";
+import { getFocusedRouteNameFromRoute, NavigatorScreenParams } from "@react-navigation/native";
 import { SettingsNavigationRoute } from "../settings/navigation/settingsNavigationRoutes";
 import FontAwesome, { FontAwesomeIconName } from "@react-native-vector-icons/fontawesome";
 import useGetProfileQuery from "../../profile/hooks/useGetProfileQuery";
@@ -24,13 +24,28 @@ const AppBottomTabNavigator = () => {
         >
             <AppBottomTab.Screen
                 name={ChatNavigationRoutes.ChatStack}
-                options={{
-                    tabBarIcon: ({ color, size, focused }) => {
-                        const chatIconName: FontAwesomeIconName = focused ? 'comment' : 'comment-o'
+                options={({ route }) => {
+                    const currentActiveStackRoute = getFocusedRouteNameFromRoute(route);
 
-                        return <FontAwesome name={chatIconName} size={size} color={color} />
-                    },
-                    tabBarLabel: 'Chats'
+                    const screensToHideTabs = [
+                        ChatNavigationRoutes.ChatViewScreen,
+                        ChatNavigationRoutes.ChatProfile,
+                    ] as string[];
+
+                    const shouldHideTabs = currentActiveStackRoute
+                        && screensToHideTabs.includes(currentActiveStackRoute)
+
+                    return {
+                        tabBarIcon: ({ color, size, focused }) => {
+                            const chatIconName: FontAwesomeIconName = focused ? 'comment' : 'comment-o'
+    
+                            return <FontAwesome name={chatIconName} size={size} color={color} />
+                        },
+                        tabBarStyle: {
+                            display: shouldHideTabs ? 'none' : undefined,
+                        },
+                        tabBarLabel: 'Chats'
+                    }
                 }}
                 component={ChatScreens}
             />
