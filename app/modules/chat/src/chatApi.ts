@@ -16,9 +16,11 @@ class ChatApi {
         }
     }
 
-    public static getPosts = async () => {
+    public static getPosts = async (userId: string) => {
+        const url = `${ChatApi.ROUTES.POSTS}?userId=${userId}`;
+
         try {
-            return await fetchApi(ChatApi.ROUTES.POSTS);
+            return await fetchApi<chat.Api.GetPostsResponse>(url);
         } catch (error) {
             console.error(error);
         }
