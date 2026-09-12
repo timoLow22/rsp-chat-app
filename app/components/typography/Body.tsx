@@ -4,13 +4,17 @@ import { StyleSheet, Text, TextStyle } from "react-native"
 interface BodyProps {
     size: 'xsmall' | 'small' | 'medium' | 'large';
     style?: Omit<TextStyle, 'fontFamily' | 'fontSize'>;
+    numberOfLines?: number;
 }
 
 const Body = (props: PropsWithChildren<BodyProps>) => {
-    const { children, size, style } = props;
+    const { children, size, style, numberOfLines } = props;
 
     return (
-        <Text style={[ style, styles[size] ]}>
+        <Text
+            style={[ style, styles[size] ]}
+            numberOfLines={numberOfLines}
+        >
             {children}
         </Text>
     )

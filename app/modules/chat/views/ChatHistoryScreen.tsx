@@ -3,7 +3,7 @@ import { FlatList, ListRenderItem, StyleSheet, Text, View } from "react-native";
 import { ChatNavigationRoutes } from "../navigation/chatNavigationRoutes";
 import { StackNavigationOptions, StackNavigationProp } from "@react-navigation/stack";
 import { ChatStackParamList } from "../navigation/chatScreens";
-import useGetUsersInfiniteQuery from "../hooks/useGetUsersInfiniteQuery";
+import useGetChatsInfiniteQuery from "../hooks/useGetChatsInfiniteQuery";
 import ListItem from "../../../components/ListItem";
 import Heading from "../../../components/typography/Heading";
 import Body from "../../../components/typography/Body";
@@ -11,11 +11,11 @@ import Body from "../../../components/typography/Body";
 const ChatHistoryScreen = () => {
     const navigation = useNavigation<StackNavigationProp<ChatStackParamList>>();
     const {
-            chatHistoryList,
+            chatList,
             isLoading,
             isFetching,
             loadMoreUsers,
-        } = useGetUsersInfiniteQuery('123'); // TODO do we even need a userId here?
+        } = useGetChatsInfiniteQuery('123'); // TODO do we even need a userId here?
 
     if (isLoading || isFetching) {
         return (
@@ -25,8 +25,8 @@ const ChatHistoryScreen = () => {
         )
     }
 
-    const renderList: ListRenderItem<chat.User> = ({ item }) => {
-        const { avatar, username, name, id } = item;
+    const renderList: ListRenderItem<chat.ChatItem> = ({ item }) => {
+        const { avatar, username, name, id, latestMessage } = item;
 
         const itemOnPress = () => navigation.navigate(ChatNavigationRoutes.ChatViewScreen, {
             // TODO: find a way to process the ID to become a string right at the query level
@@ -40,7 +40,7 @@ const ChatHistoryScreen = () => {
             return (
                 <View style={styles.listContentContainer}>
                     <Heading size='medium'>{`${name} | ${username}`}</Heading>
-                    <Body size="small">{'Test dummy string, need to randomize this'}</Body>
+                    <Body size="small" numberOfLines={2}>{latestMessage.message}</Body>
                 </View>
             );
         }
@@ -59,9 +59,9 @@ const ChatHistoryScreen = () => {
         <View style={styles.container}>
             <FlatList
                 keyExtractor={( item, index ) => `user-${item.id}-${index}`}
-                data={chatHistoryList}
+                data={chatList}
                 renderItem={renderList}
-                onEndReached={loadMoreUsers}
+                // onEndReached={loadMoreUsers}
             />
         </View>
     )
