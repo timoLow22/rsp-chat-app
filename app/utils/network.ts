@@ -1,7 +1,7 @@
 import { BASE_URL } from "../modules/main/constants"
 
-export const fetchApi = async <T>(route = '/', requestConfig?: RequestInit) => {
-    const requestUrl = `${BASE_URL}${route}`;
+export const fetchApi = async <T>(route = '/',requestConfig?: RequestInit, baseUrl = BASE_URL) => {
+    const requestUrl = `${baseUrl}${route}`;
 
     const response = await fetch(requestUrl, requestConfig);
 

@@ -1,10 +1,11 @@
-import { BottomTabNavigationOptions, createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import SettingsScreen from "../settings/views/SettingsScreen";
 import { ChatNavigationRoutes } from "../chat/navigation/chatNavigationRoutes";
 import ChatScreens, { ChatStackParamList } from "../chat/navigation/chatScreens";
-import { NavigatorScreenParams, RouteProp } from "@react-navigation/native";
+import { NavigatorScreenParams } from "@react-navigation/native";
 import { SettingsNavigationRoute } from "../settings/navigation/settingsNavigationRoutes";
 import FontAwesome, { FontAwesomeIconName } from "@react-native-vector-icons/fontawesome";
+import useGetProfileQuery from "../../profile/hooks/useGetProfileQuery";
 
 export type AppBottomTabParamList = {
     [ChatNavigationRoutes.ChatStack]: NavigatorScreenParams<ChatStackParamList>;
@@ -14,6 +15,8 @@ export type AppBottomTabParamList = {
 const AppBottomTab = createBottomTabNavigator<AppBottomTabParamList>();
 
 const AppBottomTabNavigator = () => {
+    useGetProfileQuery();
+
     return (
         <AppBottomTab.Navigator
             initialRouteName={ChatNavigationRoutes.ChatStack}
