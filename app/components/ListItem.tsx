@@ -1,8 +1,11 @@
 import { memo } from "react";
-import { Pressable, StyleSheet, Text,  } from "react-native";
+import { Image, ImageSourcePropType, Pressable, StyleSheet, View,  } from "react-native";
+import Heading from "./typography/Heading";
+import Body from "./typography/Body";
 
 interface ListItemProps {
-    leadingElement: string | React.ReactNode;
+    imgSrc?: ImageSourcePropType;
+    leadingElement?: React.ReactNode;
     title: string | React.ReactNode;
     subtitle: string | React.ReactNode;
     trailingElement: string | React.ReactNode;
@@ -12,6 +15,7 @@ interface ListItemProps {
 
 const ListItem = (props: ListItemProps) => {
     const {
+        imgSrc,
         leadingElement,
         title,
         subtitle,
@@ -23,20 +27,23 @@ const ListItem = (props: ListItemProps) => {
     const isListItemDisabled = !Boolean(onPress) || !enabled;
 
     const renderLeadingElement = () => {
-        if (typeof leadingElement === 'string') {
+        if (imgSrc) {
             return (
-                <Text>{leadingElement}</Text>
+                <Image source={imgSrc} style={styles.imgContainer} />
             );
         }
+
+        return leadingElement;
     };
 
     const renderContent = () => {
+        // TODO: tidy up the handling of this
         if (typeof title === 'string') {
             return (
-                <>
-                    <Text>{title}</Text>
-                    <Text>{subtitle}</Text>
-                </>
+                <View style={{flex: 1, flexDirection: 'column'}}>
+                    <Heading size='medium'>{title}</Heading>
+                    <Body size="small">{subtitle}</Body>
+                </View>
             );
         }
     };
@@ -44,38 +51,51 @@ const ListItem = (props: ListItemProps) => {
     const renderTrailingElement = () => {
         if (typeof trailingElement === 'string') {
             return (
-                <Text>{trailingElement}</Text>
+                <Body size="xsmall">{trailingElement}</Body>
             );
         }
+
+        return trailingElement;
     };
 
     return (
         <Pressable
             disabled={isListItemDisabled}
             onPress={onPress}
-            style={styles.listItemContainer}
+            style={({ pressed }) => [
+                styles.listItemContainer,
+                { opacity: !isListItemDisabled && pressed ? 0.5 : 1.0 }
+            ]}
         >
-            {renderLeadingElement()}
+            <View style={styles.leadingElementContainer}>
+                {renderLeadingElement()}
+            </View>
             {renderContent()}
-            {renderTrailingElement()}
+            <View style={styles.trailingElementContainer}>
+                {renderTrailingElement()}
+            </View>
         </Pressable>
     );
 }
 
 const styles = StyleSheet.create({
     listItemContainer: {
+        flex: 1,
         flexDirection: 'row',
-        padding: 16,
+        alignItems: 'center',
+        paddingVertical: 16,
+    },
+    imgContainer: {
+        borderRadius: 50,
+        height: 50,
+        width: 50,
     },
     leadingElementContainer: {
-
-    },
-    contentContainer: {
-
+        paddingHorizontal: 16,
     },
     trailingElementContainer: {
-
-    }
+        paddingHorizontal: 16,
+    },
 });
 
 export default memo(ListItem);
