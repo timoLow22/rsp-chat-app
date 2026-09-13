@@ -1,6 +1,8 @@
 ## Overview
 A Chat app built with React Native. Specifications and requirements of the app's functionality can be found in this [document](https://drive.google.com/file/d/1MIraHClnTxjFNs4r_3vZTEHRcmO-lldB/view).
 
+APK file can be found in the [assets/ folder](https://github.com/timoLow22/rsp-chat-app/tree/b981ae9aaa250dcca091186ea011cdacf069d502/assets)
+
 ## Project structure
 
 ```text
@@ -41,14 +43,13 @@ rsp-chat-app/
                 <video src="https://github.com/user-attachments/assets/ecfb7e05-0c46-43e8-a270-6ee1ebd7e024" />
             </td>
             <td>
+                <video src="https://github.com/user-attachments/assets/aa237a6a-9eb8-4732-8238-75893d790995" />
+            </td>
+            <td>
                 <video src="https://github.com/user-attachments/assets/1685eca6-c87c-4ea7-ad34-d1fe24ae3908"/>
             </td>
             <td>
-            
-                <video src="" />
-            </td>
-            <td>
-                <video src="" />
+                <video src="https://github.com/user-attachments/assets/fb4b014d-8101-4968-93f2-4bc22f31bd4a" />
             </td>
         </tr>
     </tbody>
