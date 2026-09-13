@@ -1,6 +1,7 @@
 import { RouteProp, useRoute } from "@react-navigation/native";
 import { StackNavigationOptions, StackNavigationProp } from "@react-navigation/stack";
-import { Button, Image, KeyboardAvoidingView, StyleSheet, TextInput, View } from "react-native";
+import { Button, Image, KeyboardAvoidingView, Platform, StyleSheet, TextInput, View } from "react-native";
+
 import { ChatStackParamList } from "../navigation/chatScreens";
 import Heading from "../../../components/typography/Heading";
 import HeaderIcon from "../../../components/HeaderIcon";
@@ -17,21 +18,28 @@ const ChatViewScreen = () => {
     const { receiverMessages } = useGetReceiverMessagesQuery(params.userId);
 
     return (
-        <SafeAreaView style={styles.safeAreaContainer}>
-            <KeyboardAvoidingView style={styles.chatContainer}>
-                <FlatList
-                    inverted={true}
-                    data={receiverMessages}
-                    keyExtractor={(item, index) => `${item.messageId}-${index}`}
-                    renderItem={({ item }) => <Body size={'medium'}>{item.message}</Body>}
-                />
-                <View style={styles.bottomInputContainer}>
-                    <TextInput
-                        style={styles.input}
-                        placeholder='Type a message...'
+        <SafeAreaView edges={['bottom']} style={styles.safeAreaContainer}>
+            <KeyboardAvoidingView
+                behavior={'padding'}
+                keyboardVerticalOffset={Platform.OS === 'ios' ? 60 : 130}
+                style={styles.chatContainer}
+            >
+                <View style={styles.innerContent}>
+                    <FlatList
+                        inverted={true}
+                        data={receiverMessages}
+                        keyExtractor={(item, index) => `${item.messageId}-${index}`}
+                        renderItem={({ item }) => <Body size={'medium'}>{item.message}</Body>}
                     />
-                    {/* TODO: Replace with IconButton */}
-                    <Button title={'Send'} />
+                    <View style={styles.bottomInputContainer}>
+                        <TextInput
+                            style={styles.input}
+                            placeholder='Type a message...'
+                            placeholderTextColor={'#E0E0E0'}
+                        />
+                        {/* TODO: Replace with IconButton */}
+                        <Button title={'Send'} />
+                    </View>
                 </View>
             </KeyboardAvoidingView>
         </SafeAreaView>
@@ -99,14 +107,18 @@ const styles = StyleSheet.create({
     },
     safeAreaContainer: {
         flex: 1,
-        padding: 16,
     },
     chatContainer: {
         flex: 1,
     },
+    innerContent: {
+        flex: 1,
+        paddingHorizontal: 16,
+    },
     bottomInputContainer: {
         flexDirection: 'row',
-        marginTop: 16,
+        alignItems: 'center',
+        marginVertical: 16,
         height: 50,
     },
     input: {
@@ -114,6 +126,7 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderRadius: 8,
         marginRight: 8,
+        paddingHorizontal: 16,
     },
 });
 
