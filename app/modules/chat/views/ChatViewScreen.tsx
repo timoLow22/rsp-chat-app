@@ -5,6 +5,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 
 import Heading from "../../../components/typography/Heading";
 import HeaderIcon from "../../../components/HeaderIcon";
+import Body from "../../../components/typography/Body";
 
 import { ChatStackParamList } from "../navigation/chatScreens";
 import { ChatNavigationRoutes } from "../navigation/chatNavigationRoutes";
@@ -28,6 +29,37 @@ const ChatViewScreen = () => {
         MessageItem(item)
     );
 
+    const renderBottomArea = () => {
+        if (isReceiverBlocked) {
+            return (
+                <Body
+                    size={'small'}
+                    style={styles.blockedUserText}
+                >
+                    {'User is blocked. You are unable to send messages to this user.'}
+                </Body>
+            );
+        }
+
+        return (
+            <>
+                <TextInput
+                    value={messageText}
+                    onChangeText={setMessageText}
+                    style={styles.input}
+                    placeholder='Type a message...'
+                    placeholderTextColor={'#5B616B'}
+                />
+                {/* TODO: Replace with IconButton */}
+                <Button
+                    title={'Send'}
+                    disabled={!messageText.trim() || isPending}
+                    onPress={sendMessage}
+                />
+            </>
+        )
+    }
+
     return (
         <SafeAreaView edges={['bottom']} style={styles.safeAreaContainer}>
             <KeyboardAvoidingView
@@ -42,23 +74,9 @@ const ChatViewScreen = () => {
                         keyExtractor={(item, index) => `${item.messageId}-${index}`}
                         renderItem={renderChatMessageItems}
                     />
-                    {!isReceiverBlocked && (
-                        <View style={styles.bottomInputContainer}>
-                            <TextInput
-                                value={messageText}
-                                onChangeText={setMessageText}
-                                style={styles.input}
-                                placeholder='Type a message...'
-                                placeholderTextColor={'#E0E0E0'}
-                            />
-                            {/* TODO: Replace with IconButton */}
-                            <Button
-                                title={'Send'}
-                                disabled={!messageText.trim() || isPending}
-                                onPress={sendMessage}
-                            />
-                        </View>
-                    )}
+                    <View style={styles.bottomInputContainer}>
+                        {renderBottomArea()}
+                    </View>
                 </View>
             </KeyboardAvoidingView>
         </SafeAreaView>
@@ -147,6 +165,10 @@ const styles = StyleSheet.create({
         marginRight: 8,
         paddingHorizontal: 16,
     },
+    blockedUserText: {
+        textAlign: 'center',
+        color: '#636363'
+    }
 });
 
 export default ChatViewScreen;

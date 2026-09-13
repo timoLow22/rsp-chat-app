@@ -1,6 +1,6 @@
 import { RouteProp, StackActions, useNavigation, useRoute } from "@react-navigation/native";
 import { StackNavigationOptions, StackNavigationProp } from "@react-navigation/stack";
-import { Button, Image, ScrollView, StyleSheet, Text, View } from "react-native";
+import { Button, Image, Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 import Heading from "../../../components/typography/Heading";
@@ -9,22 +9,42 @@ import HeaderIcon from "../../../components/HeaderIcon";
 
 import { ChatStackParamList } from "../navigation/chatScreens";
 import useGetReceiverProfileQuery from "../hooks/useGetReceiverProfileQuery";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import ChatUserActions from "../navigation/chatUserActions";
+import ChatUserSelectors from "../navigation/chatUserSelectors";
+import { useMemo } from "react";
 
 type ChatProfileScreenRouteProp = RouteProp<ChatStackParamList, 'chat/profile'>;
 
 const ChatProfileScreen = () => {
     const { params } = useRoute<ChatProfileScreenRouteProp>();
-    const navigation = useNavigation();
     const dispatch = useDispatch();
-
+    
+    const isUserBlocked = useSelector(ChatUserSelectors.isUserBlocked(params.userId));
     const { userProfiles, isProfileLoading, isError } = useGetReceiverProfileQuery(params.userId);
+
+    const blockButtonConfig = useMemo(() => {
+        if (isUserBlocked) {
+            return {
+                title: 'Unblock',
+                onPress: () => dispatch(ChatUserActions.unblock(params.userId)),
+                buttonStyle: styles.unblock,
+                buttonTextStyle: styles.unblockButtontext,
+            }
+        }
+        
+        return {
+            title: 'Block',
+            onPress: () => dispatch(ChatUserActions.block(params.userId)),
+            buttonStyle: styles.block,
+                buttonTextStyle: styles.blockButtonText,
+        }
+    }, [isUserBlocked]);
 
     if (isProfileLoading) {
         return (
             <View style={styles.container}>
-               <Text>Content loading: Build placeholder shimmer later</Text> 
+               <Text>Content loading</Text> 
             </View>
         );
     }
@@ -39,14 +59,6 @@ const ChatProfileScreen = () => {
 
     const { avatar, displayName, headline, bio } = userProfiles[0];
 
-    const blockUser = () => {
-        dispatch(ChatUserActions.block(params.userId));
-    };
-
-    const unblockUser = () => {
-        dispatch(ChatUserActions.unblock(params.userId));
-    };
-
     return (
         <ScrollView
             style={styles.scrollView}
@@ -54,8 +66,8 @@ const ChatProfileScreen = () => {
             showsVerticalScrollIndicator={false}
         >
             <SafeAreaView style={styles.safeAreaView}>
-                <Image source={{ uri: avatar }} style={styles.avatarContainer} />
                 <View style={styles.contentContainer}>
+                    <Image source={{ uri: avatar }} style={styles.avatarContainer} />
                     <Heading
                         size={'large'}
                         style={styles.alignCenter}
@@ -68,15 +80,26 @@ const ChatProfileScreen = () => {
                     >
                         {headline}
                     </Body>
+                    <Body
+                        size={'small'}
+                        style={styles.alignCenter}
+                    >
+                        {bio}
+                    </Body>
                 </View>
-                <Body
-                    size={'small'}
-                    style={styles.alignCenter}
-                >
-                    {bio}
-                </Body>
-                <Button title="Block" onPress={blockUser}/>
-                <Button title="Unblock" onPress={unblockUser}/>
+                <View>
+                    <Pressable
+                        onPress={blockButtonConfig.onPress}
+                        style={[styles.buttonContainer, blockButtonConfig.buttonStyle]}
+                    >
+                        <Heading
+                            size="medium"
+                            style={blockButtonConfig.buttonTextStyle}
+                        >
+                            {blockButtonConfig.title}
+                        </Heading>
+                    </Pressable>
+                </View>
             </SafeAreaView>
         </ScrollView>
     )
@@ -106,8 +129,7 @@ const styles = StyleSheet.create({
     },
     safeAreaView: {
         flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
+        justifyContent: 'space-between',
     },
     scrollView: {
         flex: 1,
@@ -125,11 +147,33 @@ const styles = StyleSheet.create({
         marginBottom: 32, 
     },
     contentContainer: {
-        marginBottom: 16,
+        marginTop: 48,
+        alignItems: 'center',
     },
     alignCenter: {
         textAlign: 'center',
-    }
+    },
+    buttonContainer: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderRadius: 50,
+        padding: 16,
+    },
+    block: {
+        backgroundColor: '#DD7176',
+    },
+    unblock: {
+        borderColor: '#DD7176',
+        borderWidth: 1,
+    },
+    blockButtonText: {
+        color: '#FFFFFF',
+        textAlign: 'center',
+    },
+    unblockButtontext: {
+        color: '#DD7176',
+        textAlign: 'center',
+    },
 });
 
 export default ChatProfileScreen;
