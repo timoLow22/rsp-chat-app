@@ -38,11 +38,18 @@ rsp-chat-app/
     <tbody>
         <tr>
             <td>
-                <video src="assets/bottom_tab_navigation.mov" controls width="100%"></video>
+                <video src="https://github.com/user-attachments/assets/ecfb7e05-0c46-43e8-a270-6ee1ebd7e024" />
             </td>
-            <td>Attach video here</td>
-            <td>Attach video here</td>
-            <td>Attach video here</td>
+            <td>
+                <video src="https://github.com/user-attachments/assets/1685eca6-c87c-4ea7-ad34-d1fe24ae3908"/>
+            </td>
+            <td>
+            
+                <video src="" />
+            </td>
+            <td>
+                <video src="" />
+            </td>
         </tr>
     </tbody>
 </table>
