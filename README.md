@@ -1,97 +1,63 @@
-This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
+## Overview
+A Chat app built with React Native. Specifications and requirements of the app's functionality can be found in this [document](https://drive.google.com/file/d/1MIraHClnTxjFNs4r_3vZTEHRcmO-lldB/view).
 
-# Getting Started
+## Project structure
 
-> **Note**: Make sure you have completed the [Set Up Your Environment](https://reactnative.dev/docs/set-up-your-environment) guide before proceeding.
-
-## Step 1: Start Metro
-
-First, you will need to run **Metro**, the JavaScript build tool for React Native.
-
-To start the Metro dev server, run the following command from the root of your React Native project:
-
-```sh
-# Using npm
-npm start
-
-# OR using Yarn
-yarn start
+```text
+rsp-chat-app/
+├── android/                        # Android native project files and configurations
+├── ios/                            # iOS native project files and configurations
+├── app/                            # Core application source code
+│   ├── components/                 # Shared, reusable global UI components
+│   ├── modules/                    # Feature-based modules (Domain-driven structure)
+│   │   └── <moduleName>            # Individual feature module container
+│   │       ├── hooks/              # Feature-specific custom React hooks
+│   │       ├── src/                # Internal business logic and state management
+│   │       ├── navigation/         # Route names and screen setup
+│   │       ├── views/              # Screen components and presentation layer
+│   │       └── index.d.ts          # TypeScript type definitions for the module
+│   └──  App.tsx                    # Main application root and provider setup
+├── tests/                          # Global unit, integration, and E2E tests
+├── index.js                        # App registry and native entry point
+├── .gitignore                      # Files to ignore in Git
+├── package.json                    # Project dependencies and scripts
+└── README.md                       # Project documentation
 ```
 
-## Step 2: Build and run your app
+## Demo
 
-With Metro running, open a new terminal window/pane from the root of your React Native project, and use one of the following commands to build and run your Android or iOS app:
+<table>
+    <thead>
+        <tr>
+            <th>Bottom Tabs</th>
+            <th>Chats Tab Screen (with infinite scrolling)</th>
+            <th>Chat Screen</th>
+            <th>Profile Screen (with block/unblock functionality)</th>
+            <th>Settings Screen</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Attach video here</td>
+            <td>Attach video here</td>
+            <td>Attach video here</td>
+            <td>Attach video here</td>
+            <td>Attach video here</td>
+        </tr>
+    </tbody>
+</table>
 
-### Android
+## 3rd Party dependencies used in this project
 
-```sh
-# Using npm
-npm run android
-
-# OR using Yarn
-yarn android
-```
-
-### iOS
-
-For iOS, remember to install CocoaPods dependencies (this only needs to be run on first clone or after updating native deps).
-
-The first time you create a new project, run the Ruby bundler to install CocoaPods itself:
-
-```sh
-bundle install
-```
-
-Then, and every time you update your native dependencies, run:
-
-```sh
-bundle exec pod install
-```
-
-For more information, please visit [CocoaPods Getting Started guide](https://guides.cocoapods.org/using/getting-started.html).
-
-```sh
-# Using npm
-npm run ios
-
-# OR using Yarn
-yarn ios
-```
-
-If everything is set up correctly, you should see your new app running in the Android Emulator, iOS Simulator, or your connected device.
-
-This is one way to run your app — you can also build it directly from Android Studio or Xcode.
-
-## Step 3: Modify your app
-
-Now that you have successfully run the app, let's make changes!
-
-Open `App.tsx` in your text editor of choice and make some changes. When you save, your app will automatically update and reflect these changes — this is powered by [Fast Refresh](https://reactnative.dev/docs/fast-refresh).
-
-When you want to forcefully reload, for example to reset the state of your app, you can perform a full reload:
-
-- **Android**: Press the <kbd>R</kbd> key twice or select **"Reload"** from the **Dev Menu**, accessed via <kbd>Ctrl</kbd> + <kbd>M</kbd> (Windows/Linux) or <kbd>Cmd ⌘</kbd> + <kbd>M</kbd> (macOS).
-- **iOS**: Press <kbd>R</kbd> in iOS Simulator.
-
-## Congratulations! :tada:
-
-You've successfully run and modified your React Native App. :partying_face:
-
-### Now what?
-
-- If you want to add this new React Native code to an existing application, check out the [Integration guide](https://reactnative.dev/docs/integration-with-existing-apps).
-- If you're curious to learn more about React Native, check out the [docs](https://reactnative.dev/docs/getting-started).
-
-# Troubleshooting
-
-If you're having issues getting the above steps to work, see the [Troubleshooting](https://reactnative.dev/docs/troubleshooting) page.
-
-# Learn More
-
-To learn more about React Native, take a look at the following resources:
-
-- [React Native Website](https://reactnative.dev) - learn more about React Native.
-- [Getting Started](https://reactnative.dev/docs/environment-setup) - an **overview** of React Native and how setup your environment.
-- [Learn the Basics](https://reactnative.dev/docs/getting-started) - a **guided tour** of the React Native **basics**.
-- [Blog](https://reactnative.dev/blog) - read the latest official React Native **Blog** posts.
-- [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for React Native.
+- Icon assets
+    - `@react-native-vector-icons/fontawesome`
+    - `@react-native-vector-icons/common`  - dev dependency to obtain a script that helps load the icon pack to iOS assets
+- Navigation
+    - `@react-navigation/bottom-tabs`
+    - `@react-navigation/native`
+    - `@react-navigation/stack`
+    - `react-native-screens` - dependency of react-navigation
+- State management
+    - `@tanstack/react-query`
+    - `react-redux`
+        - `@reduxjs/toolkit`
