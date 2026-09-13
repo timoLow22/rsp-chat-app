@@ -16,51 +16,18 @@ const useGetChatsInfiniteQuery = (userId: string) => {
         } = useInfiniteQuery({
         queryKey: [ChatApi.ROUTES.USERS, userId],
         queryFn: ChatApi.getUsers,
-        getNextPageParam: (lastPage) => lastPage?.offset
+        getNextPageParam: (lastPage) => {
+            if (!lastPage?.results || lastPage.results.length < 10) {
+                return undefined;
+            }
+            return (lastPage.offset ?? 0) + 10
+        }
     });
 
     const chatUsers = useMemo(() =>
         data?.pages.flatMap(page => page?.results ?? []) ?? [],
         [data],
     );
-
-    const receiverPostResults = useQueries({
-        queries: chatUsers.map((user) => ({
-            queryKey: [ChatApi.ROUTES.POSTS, user.id],
-            queryFn: () => ChatApi.getPosts(user.id.toString()),
-        })),
-    });
-
-    const chatList: chat.ChatItem[] = useMemo(() => {
-        return chatUsers.map((user, index): chat.ChatItem => {
-            const { id, avatar, name, username } = user;
-            const postQueryResult = receiverPostResults[index];
-
-            const { isLoading, isFetching } = receiverPostResults[index];
-            const isPostLoading = isLoading || isFetching;
-
-            const posts = postQueryResult?.data?.results ?? [];
-
-            // TODO: what happens when no results are coming in?
-            const lastPost = posts.length > 0
-                ? posts[posts.length - 1]
-                : null;
-
-            return {
-                id,
-                avatar,
-                name,
-                username,
-                latestMessage: (!isPostLoading) && lastPost
-                    ? mapPostToChatMessage(lastPost)
-                    : {
-                        messageId: 'loading-msg',
-                        message: isPostLoading ? 'Loading messages' : 'No messages yet',
-                        createdAt: ''
-                    }
-            }
-        });
-    }, [chatUsers, receiverPostResults]);
 
     const loadMoreUsers = () => {
         if (hasNextPage && !isFetchingNextPage) {
@@ -69,7 +36,7 @@ const useGetChatsInfiniteQuery = (userId: string) => {
     };
 
     return {
-        chatList,
+        chatUsers,
         isLoading,
         isFetching,
         isError,

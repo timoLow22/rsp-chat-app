@@ -3,7 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import ChatApi from "../src/chatApi";
 import { mapPostToChatMessage } from "../src/chatUtils";
 
-const useGetReceiverMessagesQuery = (receiverId: string) => {
+const useGetReceiverMessagesQuery = (receiverId: string, limit?: number) => {
     const {
         data: receiverMessages = [],
         isLoading,
@@ -13,7 +13,7 @@ const useGetReceiverMessagesQuery = (receiverId: string) => {
     } = useQuery({
         queryKey: [ChatApi.ROUTES.POSTS, receiverId],
         queryFn: async () => {
-            const response = await ChatApi.getPosts(receiverId);
+            const response = await ChatApi.getPosts(receiverId, limit);
             return (response?.results || []).map(mapPostToChatMessage);
         },
     });

@@ -9,7 +9,7 @@ class ChatApi {
 
     public static getUsers = async ({ pageParam = 0 }) => {
         // TODO refine the url construction
-        const url = `${ChatApi.ROUTES.USERS}?limit=5&offset=${pageParam}`;
+        const url = `${ChatApi.ROUTES.USERS}?limit=10&offset=${pageParam}`;
         try {
             return await fetchApi<chat.Api.GetUsersResponse>(url);
         } catch (error) {
@@ -17,8 +17,11 @@ class ChatApi {
         }
     }
 
-    public static getPosts = async (userId: string) => {
-        const url = `${ChatApi.ROUTES.POSTS}?userId=${userId}`;
+    public static getPosts = async (userId: string, limit?: number) => {
+        const url = limit
+            ? `${ChatApi.ROUTES.POSTS}?userId=${userId}&limit=${limit}`
+            : `${ChatApi.ROUTES.POSTS}?userId=${userId}`;
+
         try {
             return await fetchApi<chat.Api.GetPostsResponse>(url);
         } catch (error) {
