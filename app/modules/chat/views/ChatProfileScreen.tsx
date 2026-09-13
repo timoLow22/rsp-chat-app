@@ -1,17 +1,20 @@
-import { RouteProp, useRoute } from "@react-navigation/native";
-import { Image, ScrollView, StyleSheet, Text, View } from "react-native";
+import { RouteProp, StackActions, useNavigation, useRoute } from "@react-navigation/native";
+import { StackNavigationOptions, StackNavigationProp } from "@react-navigation/stack";
+import { Button, Image, ScrollView, StyleSheet, Text, View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
+
+import Heading from "../../../components/typography/Heading";
+import Body from "../../../components/typography/Body";
+import HeaderIcon from "../../../components/HeaderIcon";
+
 import { ChatStackParamList } from "../navigation/chatScreens";
 import useGetReceiverProfileQuery from "../hooks/useGetReceiverProfileQuery";
-import Heading from "../../../components/typography/Heading";
-import { SafeAreaView } from "react-native-safe-area-context";
-import Body from "../../../components/typography/Body";
-import { StackNavigationOptions, StackNavigationProp } from "@react-navigation/stack";
-import HeaderIcon from "../../../components/HeaderIcon";
 
 type ChatProfileScreenRouteProp = RouteProp<ChatStackParamList, 'chat/profile'>;
 
 const ChatProfileScreen = () => {
     const { params } = useRoute<ChatProfileScreenRouteProp>();
+    const navigation = useNavigation();
     const { userProfiles, isProfileLoading, isError } = useGetReceiverProfileQuery(params.userId);
 
     if (isProfileLoading) {
@@ -60,6 +63,7 @@ const ChatProfileScreen = () => {
                 >
                     {bio}
                 </Body>
+                <Button title="Block" onPress={() => navigation.dispatch(StackActions.popToTop)}/>
             </SafeAreaView>
         </ScrollView>
     )

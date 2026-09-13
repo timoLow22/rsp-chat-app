@@ -1,10 +1,11 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { getFocusedRouteNameFromRoute, NavigatorScreenParams } from "@react-navigation/native";
+import FontAwesome, { FontAwesomeIconName } from "@react-native-vector-icons/fontawesome";
+
 import SettingsScreen from "../settings/views/SettingsScreen";
 import { ChatNavigationRoutes } from "../chat/navigation/chatNavigationRoutes";
 import ChatScreens, { ChatStackParamList } from "../chat/navigation/chatScreens";
-import { getFocusedRouteNameFromRoute, NavigatorScreenParams } from "@react-navigation/native";
 import { SettingsNavigationRoute } from "../settings/navigation/settingsNavigationRoutes";
-import FontAwesome, { FontAwesomeIconName } from "@react-native-vector-icons/fontawesome";
 import useGetProfileQuery from "../../profile/hooks/useGetProfileQuery";
 
 export type AppBottomTabParamList = {

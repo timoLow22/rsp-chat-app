@@ -1,6 +1,7 @@
 import { useInfiniteQuery, useQueries } from "@tanstack/react-query";
-import ChatApi from "../src/chatApi";
 import { useMemo } from "react";
+
+import ChatApi from "../src/chatApi";
 import { mapPostToChatMessage } from "../src/chatUtils";
 
 const useGetChatsInfiniteQuery = (userId: string) => {

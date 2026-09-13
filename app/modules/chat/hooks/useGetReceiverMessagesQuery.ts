@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
+
 import ChatApi from "../src/chatApi";
-import { useMemo } from "react";
 import { mapPostToChatMessage } from "../src/chatUtils";
 
 const useGetReceiverMessagesQuery = (receiverId: string) => {

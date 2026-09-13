@@ -1,9 +1,10 @@
-import { Image, ScrollView, StyleSheet, Text, View } from "react-native";
-import useGetProfileQuery from "../../../profile/hooks/useGetProfileQuery";
+import { Image, ScrollView, StyleSheet, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import DeviceInfo from "react-native-device-info";
+
 import Heading from "../../../components/typography/Heading";
 import Body from "../../../components/typography/Body";
-import DeviceInfo from "react-native-device-info";
+import useGetProfileQuery from "../../../profile/hooks/useGetProfileQuery";
 
 const SettingsScreen = () => {
     const { profileData } = useGetProfileQuery();

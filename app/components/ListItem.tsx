@@ -1,6 +1,6 @@
 import { memo } from "react";
 import { Image, ImageSourcePropType, Pressable, StyleSheet, View,  } from "react-native";
-import Heading from "./typography/Heading";
+
 import Body from "./typography/Body";
 
 interface ListItemProps {

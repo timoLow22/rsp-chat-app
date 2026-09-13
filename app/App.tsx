@@ -1,10 +1,11 @@
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { NavigationContainer } from '@react-navigation/native';
 import { StatusBar, StyleSheet } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
-import { globalStore } from './modules/main/globalStore';
 import { Provider } from 'react-redux';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+
+import { globalStore } from './modules/main/globalStore';
 import AppBottomTabNavigator from './modules/navigation/appBottomTabNavigator';
-import { NavigationContainer } from '@react-navigation/native';
 
 const queryClient = new QueryClient();
 

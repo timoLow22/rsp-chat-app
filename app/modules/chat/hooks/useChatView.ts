@@ -1,6 +1,7 @@
-import { useMemo, useState } from "react";
-import useGetReceiverMessagesQuery from "./useGetReceiverMessagesQuery";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMemo, useState } from "react";
+
+import useGetReceiverMessagesQuery from "./useGetReceiverMessagesQuery";
 import ChatApi from "../src/chatApi";
 
 const useChatView = (receiverId: string) => {

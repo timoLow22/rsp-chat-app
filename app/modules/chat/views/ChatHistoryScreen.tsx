@@ -1,12 +1,14 @@
 import { useNavigation } from "@react-navigation/native";
-import { FlatList, ListRenderItem, StyleSheet, Text, View } from "react-native";
-import { ChatNavigationRoutes } from "../navigation/chatNavigationRoutes";
 import { StackNavigationOptions, StackNavigationProp } from "@react-navigation/stack";
-import { ChatStackParamList } from "../navigation/chatScreens";
-import useGetChatsInfiniteQuery from "../hooks/useGetChatsInfiniteQuery";
+import { FlatList, ListRenderItem, StyleSheet, Text, View } from "react-native";
+
 import ListItem from "../../../components/ListItem";
 import Heading from "../../../components/typography/Heading";
 import Body from "../../../components/typography/Body";
+
+import { ChatNavigationRoutes } from "../navigation/chatNavigationRoutes";
+import { ChatStackParamList } from "../navigation/chatScreens";
+import useGetChatsInfiniteQuery from "../hooks/useGetChatsInfiniteQuery";
 
 const ChatHistoryScreen = () => {
     const navigation = useNavigation<StackNavigationProp<ChatStackParamList>>();

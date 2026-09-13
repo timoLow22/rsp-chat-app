@@ -1,14 +1,14 @@
 import { RouteProp, useRoute } from "@react-navigation/native";
 import { StackNavigationOptions, StackNavigationProp } from "@react-navigation/stack";
-import { Button, Image, KeyboardAvoidingView, Platform, StyleSheet, TextInput, View } from "react-native";
+import { Button, FlatList, Image, KeyboardAvoidingView, Platform, StyleSheet, TextInput, View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
-import { ChatStackParamList } from "../navigation/chatScreens";
+import Body from "../../../components/typography/Body";
 import Heading from "../../../components/typography/Heading";
 import HeaderIcon from "../../../components/HeaderIcon";
+
+import { ChatStackParamList } from "../navigation/chatScreens";
 import { ChatNavigationRoutes } from "../navigation/chatNavigationRoutes";
-import { SafeAreaView } from "react-native-safe-area-context";
-import { FlatList } from "react-native-gesture-handler";
-import Body from "../../../components/typography/Body";
 import useChatView from "../hooks/useChatView";
 
 type ChatViewScreenRouteProp = RouteProp<ChatStackParamList, 'chat/view'>;

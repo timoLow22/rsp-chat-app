@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
-import ChatApi from "../src/chatApi";
 import { useMemo } from "react";
+
+import ChatApi from "../src/chatApi";
 
 const useGetReceiverProfileQuery = (userId: string) => {
     const { data, isLoading, isFetching, isError } = useQuery({
