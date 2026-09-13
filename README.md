@@ -33,16 +33,14 @@ rsp-chat-app/
             <th>Chats Tab Screen (with infinite scrolling)</th>
             <th>Chat Screen</th>
             <th>Profile Screen (with block/unblock functionality)</th>
-            <th>Settings Screen</th>
         </tr>
     </thead>
     <tbody>
         <tr>
-            <td>Attach video here</td>
-            <td>Attach video here</td>
-            <td>Attach video here</td>
-            <td>Attach video here</td>
-            <td>Attach video here</td>
+            <video src="assets/bottom_tab_navigation.mov" controls width="100%"></video>
+            <video src="assets/bottom_tab_navigation.mov" controls width="100%"></video>
+            <video src="assets/bottom_tab_navigation.mov" controls width="100%"></video>
+            <video src="assets/bottom_tab_navigation.mov" controls width="100%"></video>
         </tr>
     </tbody>
 </table>
