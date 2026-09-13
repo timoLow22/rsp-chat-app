@@ -37,10 +37,12 @@ rsp-chat-app/
     </thead>
     <tbody>
         <tr>
-            <video src="assets/bottom_tab_navigation.mov" controls width="100%"></video>
-            <video src="assets/bottom_tab_navigation.mov" controls width="100%"></video>
-            <video src="assets/bottom_tab_navigation.mov" controls width="100%"></video>
-            <video src="assets/bottom_tab_navigation.mov" controls width="100%"></video>
+            <td>
+                <video src="assets/bottom_tab_navigation.mov" controls width="100%"></video>
+            </td>
+            <td>Attach video here</td>
+            <td>Attach video here</td>
+            <td>Attach video here</td>
         </tr>
     </tbody>
 </table>
