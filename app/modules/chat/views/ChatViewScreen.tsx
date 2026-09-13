@@ -1,15 +1,15 @@
 import { RouteProp, useRoute } from "@react-navigation/native";
 import { StackNavigationOptions, StackNavigationProp } from "@react-navigation/stack";
-import { Button, FlatList, Image, KeyboardAvoidingView, Platform, StyleSheet, TextInput, View } from "react-native";
+import { Button, FlatList, Image, KeyboardAvoidingView, ListRenderItem, Platform, StyleSheet, TextInput, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-import Body from "../../../components/typography/Body";
 import Heading from "../../../components/typography/Heading";
 import HeaderIcon from "../../../components/HeaderIcon";
 
 import { ChatStackParamList } from "../navigation/chatScreens";
 import { ChatNavigationRoutes } from "../navigation/chatNavigationRoutes";
 import useChatView from "../hooks/useChatView";
+import MessageItem from "../components/MessageItem";
 
 type ChatViewScreenRouteProp = RouteProp<ChatStackParamList, 'chat/view'>;
 
@@ -23,7 +23,10 @@ const ChatViewScreen = () => {
         setMessageText,
         sendMessage,
     } = useChatView(params.userId ?? '');
-    
+
+    const renderChatMessageItems: ListRenderItem<chat.Message>  = ({ item }) => (
+        MessageItem(item)
+    );
 
     return (
         <SafeAreaView edges={['bottom']} style={styles.safeAreaContainer}>
@@ -37,7 +40,7 @@ const ChatViewScreen = () => {
                         inverted={true}
                         data={chatMessages}
                         keyExtractor={(item, index) => `${item.messageId}-${index}`}
-                        renderItem={({ item }) => <Body size={'medium'}>{item.message}</Body>}
+                        renderItem={renderChatMessageItems}
                     />
                     {!isReceiverBlocked && (
                         <View style={styles.bottomInputContainer}>
