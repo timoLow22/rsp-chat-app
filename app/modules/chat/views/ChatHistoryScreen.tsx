@@ -12,14 +12,13 @@ const ChatHistoryScreen = () => {
     const {
             chatUsers,
             isLoading,
-            isFetching,
             loadMoreUsers,
         } = useGetChatsInfiniteQuery('timoLow-22');
 
     if (isLoading) {
         return (
-            <View style={styles.container}>
-                <Text>Content loading</Text> 
+            <View style={[styles.container, styles.loadingContent]}>
+                <Text>Chats loading</Text> 
             </View>
         )
     }
@@ -61,6 +60,10 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
     },
+    loadingContent: {
+        justifyContent: 'center',
+        alignItems: 'center',
+    }
 });
 
 export const buildChatHistoryScreenOptions = (): StackNavigationOptions => {
