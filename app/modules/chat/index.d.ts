@@ -26,7 +26,7 @@ declare namespace chat {
     }
 
     interface Post {
-        id: number;
+        id: string;
         userId: number;
         title: string;
         body: string;
@@ -43,9 +43,10 @@ declare namespace chat {
     }
 
     interface Message {
-        messageId: number;
+        messageId: string;
         message: string;
         createdAt: string;
+        status?: 'sending' | 'sent' | 'failed';
     }
 
     interface ChatItem extends Omit<User, 'address' | 'website' | 'phone' | 'email'> {
@@ -60,6 +61,12 @@ declare namespace chat {
             results: User[];
         }
 
+        interface SendPostBody {
+            userId: string;
+            title: string;
+            body: string;
+        }
+
         interface GetPostsResponse {
             total: number;
             limit: number;
@@ -72,6 +79,14 @@ declare namespace chat {
             limit: number;
             offset: number;
             results: Profile[];
+        }
+
+        interface SendPostResponse {
+            id: string;
+            userId: string;
+            title: string;
+            body: string;
+            createdAt: string;
         }
     }
 }

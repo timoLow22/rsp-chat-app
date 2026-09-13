@@ -7,15 +7,22 @@ import Heading from "../../../components/typography/Heading";
 import HeaderIcon from "../../../components/HeaderIcon";
 import { ChatNavigationRoutes } from "../navigation/chatNavigationRoutes";
 import { SafeAreaView } from "react-native-safe-area-context";
-import useGetReceiverMessagesQuery from "../hooks/useGetReceiverMessagesQuery";
 import { FlatList } from "react-native-gesture-handler";
 import Body from "../../../components/typography/Body";
+import useChatView from "../hooks/useChatView";
 
 type ChatViewScreenRouteProp = RouteProp<ChatStackParamList, 'chat/view'>;
 
 const ChatViewScreen = () => {
     const { params } = useRoute<ChatViewScreenRouteProp>();
-    const { receiverMessages } = useGetReceiverMessagesQuery(params.userId);
+    const {
+        chatMessages,
+        messageText,
+        isPending,
+        setMessageText,
+        sendMessage,
+    } = useChatView(params.userId ?? '');
+    
 
     return (
         <SafeAreaView edges={['bottom']} style={styles.safeAreaContainer}>
@@ -27,18 +34,24 @@ const ChatViewScreen = () => {
                 <View style={styles.innerContent}>
                     <FlatList
                         inverted={true}
-                        data={receiverMessages}
+                        data={chatMessages}
                         keyExtractor={(item, index) => `${item.messageId}-${index}`}
                         renderItem={({ item }) => <Body size={'medium'}>{item.message}</Body>}
                     />
                     <View style={styles.bottomInputContainer}>
                         <TextInput
+                            value={messageText}
+                            onChangeText={setMessageText}
                             style={styles.input}
                             placeholder='Type a message...'
                             placeholderTextColor={'#E0E0E0'}
                         />
                         {/* TODO: Replace with IconButton */}
-                        <Button title={'Send'} />
+                        <Button
+                            title={'Send'}
+                            disabled={!messageText.trim() || isPending}
+                            onPress={sendMessage}
+                        />
                     </View>
                 </View>
             </KeyboardAvoidingView>

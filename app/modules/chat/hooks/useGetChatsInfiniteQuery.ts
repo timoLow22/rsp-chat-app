@@ -53,7 +53,7 @@ const useGetChatsInfiniteQuery = (userId: string) => {
                 latestMessage: (!isPostLoading) && lastPost
                     ? mapPostToChatMessage(lastPost)
                     : {
-                        messageId: 0,
+                        messageId: 'loading-msg',
                         message: isPostLoading ? 'Loading messages' : 'No messages yet',
                         createdAt: ''
                     }

@@ -4,18 +4,19 @@ import { useMemo } from "react";
 import { mapPostToChatMessage } from "../src/chatUtils";
 
 const useGetReceiverMessagesQuery = (receiverId: string) => {
-    const { data, isLoading, isFetching, isError, refetch } = useQuery({
+    const {
+        data: receiverMessages = [],
+        isLoading,
+        isFetching,
+        isError,
+        refetch,
+    } = useQuery({
         queryKey: [ChatApi.ROUTES.POSTS, receiverId],
-        queryFn: () => ChatApi.getPosts(receiverId),
+        queryFn: async () => {
+            const response = await ChatApi.getPosts(receiverId);
+            return (response?.results || []).map(mapPostToChatMessage);
+        },
     });
-
-    const receiverMessages: chat.Message[] = useMemo(() => {
-        if (!data?.results) {
-            return []
-        }
-
-        return data.results.map(mapPostToChatMessage);
-    }, [data]);
 
     return {
         receiverMessages,
