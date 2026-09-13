@@ -1,4 +1,8 @@
 declare namespace chat {
+    interface State {
+        blockedUsers: string[];
+    }
+
     interface ChatViewRouteParams {
         userId: string;
         username: string;

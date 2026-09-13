@@ -1,13 +1,16 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { useMemo, useState } from "react";
+import { useMemo, useReducer, useState } from "react";
+import { useSelector } from "react-redux";
 
 import useGetReceiverMessagesQuery from "./useGetReceiverMessagesQuery";
 import ChatApi from "../src/chatApi";
+import ChatUserSelectors from "../navigation/chatUserSelectors";
 
 const useChatView = (receiverId: string) => {
     const [messageText, setMessageText] = useState('');
-    const queryClient = useQueryClient();
+    const isReceiverBlocked = useSelector(ChatUserSelectors.isUserBlocked(receiverId));
 
+    const queryClient = useQueryClient();
     const { receiverMessages = [] } = useGetReceiverMessagesQuery(receiverId);
 
     /**
@@ -101,11 +104,10 @@ const useChatView = (receiverId: string) => {
         return [...receiverMessages].reverse();
     }, [receiverMessages]);
 
-    console.log('receiverMessages', receiverMessages);
-
     return {
         chatMessages,
         messageText,
+        isReceiverBlocked,
         isPending,
         setMessageText,
         sendMessage,

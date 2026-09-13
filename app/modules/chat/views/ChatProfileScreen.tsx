@@ -9,12 +9,16 @@ import HeaderIcon from "../../../components/HeaderIcon";
 
 import { ChatStackParamList } from "../navigation/chatScreens";
 import useGetReceiverProfileQuery from "../hooks/useGetReceiverProfileQuery";
+import { useDispatch } from "react-redux";
+import ChatUserActions from "../navigation/chatUserActions";
 
 type ChatProfileScreenRouteProp = RouteProp<ChatStackParamList, 'chat/profile'>;
 
 const ChatProfileScreen = () => {
     const { params } = useRoute<ChatProfileScreenRouteProp>();
     const navigation = useNavigation();
+    const dispatch = useDispatch();
+
     const { userProfiles, isProfileLoading, isError } = useGetReceiverProfileQuery(params.userId);
 
     if (isProfileLoading) {
@@ -34,6 +38,14 @@ const ChatProfileScreen = () => {
     }
 
     const { avatar, displayName, headline, bio } = userProfiles[0];
+
+    const blockUser = () => {
+        dispatch(ChatUserActions.block(params.userId));
+    };
+
+    const unblockUser = () => {
+        dispatch(ChatUserActions.unblock(params.userId));
+    };
 
     return (
         <ScrollView
@@ -63,7 +75,8 @@ const ChatProfileScreen = () => {
                 >
                     {bio}
                 </Body>
-                <Button title="Block" onPress={() => navigation.dispatch(StackActions.popToTop)}/>
+                <Button title="Block" onPress={blockUser}/>
+                <Button title="Unblock" onPress={unblockUser}/>
             </SafeAreaView>
         </ScrollView>
     )

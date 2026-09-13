@@ -18,6 +18,7 @@ const ChatViewScreen = () => {
     const {
         chatMessages,
         messageText,
+        isReceiverBlocked,
         isPending,
         setMessageText,
         sendMessage,
@@ -38,21 +39,23 @@ const ChatViewScreen = () => {
                         keyExtractor={(item, index) => `${item.messageId}-${index}`}
                         renderItem={({ item }) => <Body size={'medium'}>{item.message}</Body>}
                     />
-                    <View style={styles.bottomInputContainer}>
-                        <TextInput
-                            value={messageText}
-                            onChangeText={setMessageText}
-                            style={styles.input}
-                            placeholder='Type a message...'
-                            placeholderTextColor={'#E0E0E0'}
-                        />
-                        {/* TODO: Replace with IconButton */}
-                        <Button
-                            title={'Send'}
-                            disabled={!messageText.trim() || isPending}
-                            onPress={sendMessage}
-                        />
-                    </View>
+                    {!isReceiverBlocked && (
+                        <View style={styles.bottomInputContainer}>
+                            <TextInput
+                                value={messageText}
+                                onChangeText={setMessageText}
+                                style={styles.input}
+                                placeholder='Type a message...'
+                                placeholderTextColor={'#E0E0E0'}
+                            />
+                            {/* TODO: Replace with IconButton */}
+                            <Button
+                                title={'Send'}
+                                disabled={!messageText.trim() || isPending}
+                                onPress={sendMessage}
+                            />
+                        </View>
+                    )}
                 </View>
             </KeyboardAvoidingView>
         </SafeAreaView>
